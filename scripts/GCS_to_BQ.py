@@ -39,7 +39,7 @@ def get_csv_schema_as_string(sample_uri, delimiter=';'):
                 encoding=enc
             )
             cleaned_columns = [clean_column_name(col) for col in df.columns]
-            print(f"--- Đã trích xuất {len(cleaned_columns)} cột (Dùng encoding: {enc}) từ: {sample_uri}")
+            print(f"Extracted {len(cleaned_columns)} columns (using encoding: {enc}) from: {sample_uri}")
             
             return [bigquery.SchemaField(name, "STRING") for name in cleaned_columns], enc
         except (UnicodeDecodeError, Exception):
