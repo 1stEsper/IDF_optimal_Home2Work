@@ -11,7 +11,7 @@ variable "region" {
 variable "datasets" {
   description = "List of layers to create"
   type        = list(string)
-  default     = ["idfm_raw", "geo_raw", "housing_raw", "core", "mart"]
+  default     = ["bronze_raw", "silver_stg", "silver_core", "gold_mart"]
 }
 
 variable "bucket_name" {
