@@ -88,9 +88,9 @@ def ingest_to_bronze(dataset_id, table_id, gcs_path):
     except Exception as e: 
         print(f"An error occurred while loading {table_id}: {e}")
 
-ingest_to_bronze("geo_raw", "communes", "commune_idf/*.csv")
-ingest_to_bronze("housing_raw", "rent_commune_2025", "loyer/*.csv")
+ingest_to_bronze("bronze_raw", "communes", "commune_idf/*.csv")
+ingest_to_bronze("bronze_raw", "rent_commune_2025", "loyer/*.csv")
 
 gtfs_files = ['stops', 'routes', 'trips', 'stop_times', 'calendar', 'calendar_dates', 'agency', 'transfers']
 for f in gtfs_files: 
-    ingest_to_bronze('idfm_raw', f, f"IDFM-gtfs/{f}.txt")
+    ingest_to_bronze('bronze_raw', f, f"IDFM-gtfs/{f}.txt")
