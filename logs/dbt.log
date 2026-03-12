@@ -1,0 +1,80 @@
+[0m12:23:53.686477 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7d580e89b090>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7d580e898bd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7d580e898950>]}
+
+
+============================== 12:23:53.689395 | 47a14f05-5b54-4efc-a440-8e1bbff524a2 ==============================
+[0m12:23:53.689395 [info ] [MainThread]: Running with dbt=1.11.7
+[0m12:23:53.689847 [debug] [MainThread]: running dbt with arguments {'cache_selected_only': 'False', 'invocation_command': 'dbt init transform', 'log_format': 'default', 'indirect_selection': 'eager', 'use_colors': 'True', 'log_cache_events': 'False', 'empty': 'None', 'no_print': 'None', 'introspect': 'True', 'warn_error': 'None', 'fail_fast': 'False', 'static_parser': 'True', 'write_json': 'True', 'use_experimental_parser': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'log_path': 'logs', 'send_anonymous_usage_stats': 'True', 'debug': 'False', 'profiles_dir': '/home/leahcimai/.dbt', 'quiet': 'False', 'partial_parse': 'True', 'target_path': 'None', 'printer_width': '80', 'version_check': 'True'}
+[0m12:23:53.725836 [debug] [MainThread]: Starter project path: /home/leahcimai/IDF_optimal_Home2Work/.venv/lib/python3.11/site-packages/dbt/include/starter_project
+[0m12:23:53.728880 [info ] [MainThread]: 
+Your new dbt project "transform" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m12:23:53.729465 [info ] [MainThread]: Setting up your profile.
+[0m16:43:52.836364 [error] [MainThread]: Encountered an error:
+
+[0m16:43:52.846131 [error] [MainThread]: Traceback (most recent call last):
+  File "/home/leahcimai/IDF_optimal_Home2Work/.venv/lib/python3.11/site-packages/dbt/cli/requires.py", line 182, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/leahcimai/IDF_optimal_Home2Work/.venv/lib/python3.11/site-packages/dbt/cli/requires.py", line 128, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/leahcimai/IDF_optimal_Home2Work/.venv/lib/python3.11/site-packages/dbt/cli/main.py", line 483, in init
+    results = task.run()
+              ^^^^^^^^^^
+  File "/home/leahcimai/IDF_optimal_Home2Work/.venv/lib/python3.11/site-packages/dbt/task/init.py", line 346, in run
+    self.setup_profile(profile_name)
+  File "/home/leahcimai/IDF_optimal_Home2Work/.venv/lib/python3.11/site-packages/dbt/task/init.py", line 248, in setup_profile
+    if not self.check_if_can_write_profile(profile_name=profile_name):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/leahcimai/IDF_optimal_Home2Work/.venv/lib/python3.11/site-packages/dbt/task/init.py", line 211, in check_if_can_write_profile
+    response = click.confirm(
+               ^^^^^^^^^^^^^^
+  File "/home/leahcimai/IDF_optimal_Home2Work/.venv/lib/python3.11/site-packages/click/termui.py", line 245, in confirm
+    raise Abort() from None
+click.exceptions.Abort
+
+[0m16:43:52.850121 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": false, "command_wall_clock_time": 210.13184, "process_in_blocks": "304", "process_kernel_time": 0.235955, "process_mem_max_rss": "104136", "process_out_blocks": "784", "process_user_time": 1.203774}
+[0m16:43:52.851740 [debug] [MainThread]: Command `dbt init` failed at 16:43:52.851422 after 210.13 seconds
+[0m16:43:52.852776 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7d5812601290>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7d580e897f10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7d580e895810>]}
+[0m16:43:52.854456 [debug] [MainThread]: Flushing usage events
+[0m16:43:53.279535 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m16:18:05.853699 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x79aac198cb10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x79aac1984910>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x79aac1d36790>]}
+
+
+============================== 16:18:05.857726 | cf1112d7-aa19-447a-9561-877848512a97 ==============================
+[0m16:18:05.857726 [info ] [MainThread]: Running with dbt=1.11.7
+[0m16:18:05.858268 [debug] [MainThread]: running dbt with arguments {'no_print': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'log_format': 'default', 'fail_fast': 'False', 'version_check': 'True', 'profiles_dir': '/home/leahcimai/.dbt', 'target_path': 'None', 'debug': 'False', 'warn_error': 'None', 'send_anonymous_usage_stats': 'True', 'log_cache_events': 'False', 'printer_width': '80', 'use_colors': 'True', 'static_parser': 'True', 'use_experimental_parser': 'False', 'quiet': 'False', 'empty': 'False', 'introspect': 'True', 'indirect_selection': 'eager', 'partial_parse': 'True', 'write_json': 'True', 'invocation_command': 'dbt run --models silver_stg', 'log_path': 'logs', 'cache_selected_only': 'False'}
+[0m16:18:05.858613 [warn ] [MainThread]: [[33mWARNING[0m]: Deprecated functionality
+Usage of `--models`, `--model`, and `-m` is deprecated in favor of `--select` or
+`-s`.
+[0m16:18:05.858963 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': 'cf1112d7-aa19-447a-9561-877848512a97', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x79aac1d372d0>]}
+[0m16:18:05.859407 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/leahcimai/IDF_optimal_Home2Work/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m16:18:05.859882 [warn ] [MainThread]: [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- ModelParamUsageDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+[0m16:18:05.860461 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.010464844, "process_in_blocks": "312", "process_kernel_time": 0.169907, "process_mem_max_rss": "101620", "process_out_blocks": "8", "process_user_time": 0.950757}
+[0m16:18:05.860845 [debug] [MainThread]: Command `dbt run` failed at 16:18:05.860768 after 0.01 seconds
+[0m16:18:05.861126 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x79aac199fd50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x79aac5847010>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x79aac1987810>]}
+[0m16:18:05.861414 [debug] [MainThread]: Flushing usage events
+[0m16:18:06.264564 [debug] [MainThread]: An error was encountered while trying to flush usage events

@@ -5,3 +5,4 @@ credentials
 *.backup
 *.terraform
 *.tfstate
+test.ipynb
