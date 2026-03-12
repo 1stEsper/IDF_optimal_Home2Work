@@ -1,0 +1,21 @@
+
+models:
+  - name: stg_housing__rent_commune_2025
+    tests:
+      - dbt_utils.expression_is_true:
+          arguments: 
+            expression: "insee_c IS NOT NULL"
+      - dbt_utils.expression_is_true:
+          arguments: 
+            expression: "loyer_pred_m2 > 0 OR loyer_pred_m2 IS NULL"
+
+  - name: core_dim_area_housing
+    columns: 
+      - name: commune_code
+        tests: 
+          - unique
+          - not_null
+    tests:
+      - dbt_utils.expression_is_true:
+          arguments: 
+            expression: "loyer_pred_m2 IS NOT NULL OR nb_obs_commune IS NULL"

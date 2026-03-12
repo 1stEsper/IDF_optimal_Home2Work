@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: bronze_raw       
+    database: idf-analysis 
+    schema: bronze_raw     
+    tables:
+      - name: agency
+      - name: calendar
+      - name: calendar_dates
+      - name: communes
+      - name: rent_commune_2025
+      - name: stop_times
+      - name: trips
+      - name: stops        
+      - name: routes
+      - name: transfers
+
+      

@@ -1,0 +1,13 @@
+
+transform:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: idf-analysis          
+      dataset: silver_stg         
+      threads: 4
+      keyfile: "../credentials/idf-analysis-0a1db53d06ba.json"
+      location: us-central1        
+      priority: interactive
