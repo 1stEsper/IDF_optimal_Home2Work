@@ -21,7 +21,6 @@ enriched_stops AS (
         s.location_type,
         s.parent_station,
         
-        -- Spatial join: Find the nearest commune (radius 500m)
         a.commune_code,
         a.commune_name,
         a.loyer_pred_m2,
@@ -34,10 +33,11 @@ enriched_stops AS (
         
     FROM stops s
     LEFT JOIN areas a 
-        ON ST_DWITHIN(s.geom, a.geom_centroid, 1000)
+        -- Find the nearest commune (radius 1000m)
+        ON ST_DWITHIN(s.geom, a.geom_centroid, 1000) 
     QUALIFY ROW_NUMBER() OVER (
         PARTITION BY s.stop_id
-        ORDER BY a.loyer_pred_m2 DESC, ST_DISTANCE(s.geom, a.geom_centroid) ASC
+        ORDER BY a.loyer_pred_m2 ASC, ST_DISTANCE(s.geom, a.geom_centroid) ASC -- Low price is the priority.
     ) = 1
 )
 

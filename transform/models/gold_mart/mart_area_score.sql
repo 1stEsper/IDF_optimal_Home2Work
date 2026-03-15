@@ -9,9 +9,22 @@ WITH area_housing AS (
     commune_code,
     commune_name,
     loyer_pred_m2,
-    -- Housing score (cheaper = higher score)
-    GREATEST(0, 100 - (loyer_pred_m2 - 10) * 5) AS housing_score_raw
+    CASE WHEN commune_code LIKE '751%' THEN 'CORE' ELSE 'OUTER' END AS market_type
+
   FROM {{ ref('core_dim_area_housing') }}
+),
+
+housing_scored AS (
+  SELECT *,
+    CASE 
+      -- Paris (Core): Price from 27.4€ - 45.5€
+      WHEN market_type = 'CORE' THEN 
+        GREATEST(0, LEAST(100, (45 - loyer_pred_m2) / (45 - 28) * 100))
+      -- Suburban (Outer): FROM 16.7€ - 23.5€
+      ELSE 
+        GREATEST(0, LEAST(100, (23 - loyer_pred_m2) / (23 - 17) * 100))
+    END AS housing_score_raw
+  FROM area_housing
 ),
 
 area_mobility AS (
@@ -20,7 +33,7 @@ area_mobility AS (
     n_stops_within_800m,
     min_distance_to_stop_m,
     -- Mobility score (More stops + closer = higher point)
-    LEAST(100, n_stops_within_800m * 10) AS mobility_score_raw
+    LEAST(100, (100 - (min_distance_to_stop_m / 8)) + (n_stops_within_800m * 2)) AS mobility_score_raw
   FROM {{ ref('fct_area_mobility') }}
 ),
 
@@ -36,7 +49,7 @@ final_score AS (
     
     -- Total score = 50% housing + 50% mobility
     ROUND((h.housing_score_raw * 0.5 + m.mobility_score_raw * 0.5), 1) AS total_score
-  FROM area_housing h
+  FROM housing_scored h
   LEFT JOIN area_mobility m ON h.commune_code = m.commune_code
 ), 
 ranked_score AS (
