@@ -30,11 +30,29 @@ scored AS (
     a.housing_score,
     d.distance_to_hub_km,
     d.distance_score,
-    ROUND((a.housing_score * 0.5 + d.distance_score * 0.5), 1) AS hub_total_score,
+    CASE 
+        WHEN d.distance_to_hub_km <= 5 THEN 20 
+        WHEN d.distance_to_hub_km <= 10 THEN 15
+        WHEN d.distance_to_hub_km <= 15 THEN 10
+        ELSE 0 
+    END AS location_bonus,
+    ROUND((a.housing_score * 0.5 + d.distance_score * 0.5) +
+           (CASE 
+                WHEN d.distance_to_hub_km <= 5 THEN 20 
+                WHEN d.distance_to_hub_km <= 10 THEN 15
+                WHEN d.distance_to_hub_km <= 15 THEN 10
+                ELSE 0 
+            END),1) AS hub_total_score,
     
     ROW_NUMBER() OVER (
       PARTITION BY d.hub_id 
-      ORDER BY (a.housing_score * 0.5 + d.distance_score * 0.5) DESC
+      ORDER BY (a.housing_score * 0.5 + d.distance_score * 0.5) +
+           (CASE 
+                WHEN d.distance_to_hub_km <= 5 THEN 20 
+                WHEN d.distance_to_hub_km <= 10 THEN 15
+                WHEN d.distance_to_hub_km <= 15 THEN 10
+                ELSE 0 
+            END) DESC
     ) AS hub_rank
   FROM area_base a
   JOIN hub_distance d ON a.commune_code = d.commune_code
