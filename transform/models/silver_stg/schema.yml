@@ -4,7 +4,7 @@ models:
     tests:
       - dbt_utils.expression_is_true:
           arguments: 
-            expression: "insee_c IS NOT NULL"
+            expression: "commune_code IS NOT NULL"
       - dbt_utils.expression_is_true:
           arguments: 
             expression: "loyer_pred_m2 > 0 OR loyer_pred_m2 IS NULL"

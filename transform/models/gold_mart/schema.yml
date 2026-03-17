@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: mart_area_score
+    description: "Overall ranking for the Ile-de-France region"
+    columns:
+      - name: commune_code
+        description: "The unique id of the commune"
+        tests:
+          - unique
+          - not_null
+      - name: total_suitability_score
+        description: "Final score"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: -50 # Because of the penalty, the result could be negative.
+              max_value: 150 # Because of the bonus, it could be over 100.
+
+  - name: mart_area_score_by_hub
+    description: "Personalized rankings by work hub."
+    tests:
+      # The most important test: A commune can only appear once per Hub.
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - commune_code
+            - hub_name
+    columns:
+      - name: hub_rank
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 20 # Because we qualified for the top 20.
+      - name: direct_rail_bonus
+        tests:
+          - accepted_values:
+              values: [0, 20]
+              quote: false
