@@ -1,6 +1,11 @@
 # IDF_optimal_Home2Work
 ## Data Warehouse Optimizing Residential Choice in Île-de-France 
 
+
+![Display suitable living communes when working at the Austerlitz Hub](result_images/HeadMap.png)
+
+![Top 20 suitable living communes](result_images/top20.png)
+
 **Portfolio project showcasing modern Data Engineering skills**: multi‑format ingestion, dimensional modeling, geospatial analytics, business scoring, data quality, dashboarding.
 
 ## **Business Objective**
@@ -61,9 +66,18 @@ Data warehouse, business logic.
 - expression_is_true: "loyer_pred_m2 >= 0 OR loyer_pred_m2 IS NULL"
 
 
-## **Looker Studio Dashboard**
+## **Interactive Dashboard**
 
-...
+I used **Looker Studio** to visualize the optimal living areas for each transport hub.
+
+**Key Features**:
+
+- Heatmap: Identification of high-score communes around Ile-de-France.
+
+- Hub Filter: Instantly switch between Gare de Lyon, Châtelet, etc.
+
+[Locker Studio Dashboard](https://lookerstudio.google.com/reporting/08b7ae5d-f632-4535-b309-fbdad2e60889)
+
 
 ## **Data Engineering Skills Demonstrated**
 
@@ -92,7 +106,6 @@ uv run python3 scripts/ingest_to_gcs.py
 uv run dbt deps && dbt run && dbt test
 
 # 4. Dashboard
-<!-- lookerstudio.google.com → new report → BigQuery → gold_mart.mart_area_score -->
 </pre>
 
 ## **Resources**
