@@ -6,3 +6,4 @@ credentials
 *.terraform
 *.tfstate
 test.ipynb
+profiles.yml

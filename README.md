@@ -32,6 +32,7 @@ graph TB
 | Ingestion     | Python (pandas, gcsfs, auto‑encoding)  |
 | Modeling      | dbt (medallion, dims/facts, DQ tests)  |
 | Spatial       | BigQuery GIS (ST_DWITHIN, ST_DISTANCE) |
+| Dockerization | Docker                                 |
 | Visualization | Looker Studio (map, ranking, filters)  |
 
 ## **Data Sources**
@@ -42,24 +43,24 @@ graph TB
 | Rent OLL 2025 | Median rent/m² per commune              | commune_code, loyer_pred_m2 |
 
 ## **Technical Pipeline**
-1. Bronze Ingestion (Sources → GCS)
+### 1. Bronze Ingestion (Sources → GCS)
 
 Storing data from various sources, with snapshots being the date of ingest.
 
-2. Silver Storage (GCS → BigQuery)
+### 2. Silver Storage (GCS → BigQuery)
 
 Auto‑encoding detection, flexible STRING schema
 
 
-3. Silver Core (dbt SQL)
+### 3. Silver Core (dbt SQL)
 
 Use **dbt** to normalize and process data before building the data warehouse.
 
-4.  Gold Mart (business scoring)
+### 4.  Gold Mart (business scoring)
 
 Data warehouse, business logic.
 
-5. Data Quality (dbt tests)
+### 5. Data Quality (dbt tests)
 
 - unique: commune_code
 - not_null_proportion: at_least=0.95, column_name="loyer_pred_m2"
@@ -88,25 +89,72 @@ I used **Looker Studio** to visualize the optimal living areas for each transpor
 | Data Modeling        | Medallion + Kimball (dims/facts), dbt macros                  |
 | Spatial Analytics    | BigQuery GIS (800m buffer, distance scoring)                  |
 | Data Quality         | dbt schema tests + business rules                             |
+| Dockerization        | Docker Container  
 | Modern Analytics     | Looker Studio + end‑to‑end SQL                                |
 
 
+## **Dockerization & Portability**
+
+For consistent execution across any environment, the entire data pipeline (Python scripts + dbt) is containerized using **Docker** and managed by **uv** for lightning-fast dependency resolution.
+
+### **1. Container Architecture**
+The Docker image encapsulates:
+- **Python 3.12-slim** as the base OS.
+- **uv** to manage dependencies (google-cloud-storage, dbt-bigquery, etc.).
+- A custom **orchestration script** (`run_pipeline.sh`) to ensure sequential execution.
+
+### **2. Build the Pipeline**
+```bash
+# Build the image
+docker build -t idf-data-pipeline .
+
+```
+
+### **3. Run the Full Flow**
+
+The container executes a "Domino Effect" pipeline: `Local → GCS → BigQuery Raw → dbt Build` 
+
+```bash
+docker run --rm \
+  -v $(pwd)/credentials:/app/credentials \
+  idf-data-pipeline
+
+```
+
+
 ## **Local Setup**
+
+(**Note**: U have to create a Google Service Account JSON and ensure it is in the `credentials/` folder.)
 <pre>
 # 1. Infrastructure
 uv run terraform init && terraform apply
 
-# 2. Bronze ingestion
-uv run python3 scripts/GCS_to_BQ.py
+# 2. Docker
+ - docker build -t idf-data-pipeline .
+ - docker run --rm \
+  -v $(pwd)/credentials:/app/credentials \
+  idf-data-pipeline
 
-# 3. Silver storage
-uv run python3 scripts/ingest_to_gcs.py
-
-# 3. dbt pipeline
-uv run dbt deps && dbt run && dbt test
-
-# 4. Dashboard
 </pre>
+
+## **Conclusion & Key Takeaways**
+
+This project serves as a comprehensive demonstration of a **Modern Data Stack** implementation, moving beyond simple SQL queries to a fully orchestrated, production-ready pipeline.
+
+### **Key Achievements:**
+* **End-to-End Automation**: Successfully integrated **Terraform** for Infrastructure-as-Code and **Docker** for seamless deployment, ensuring the pipeline is portable and scalable.
+* **Advanced Geospatial Analytics**: Leveraged **BigQuery GIS** to solve a real-world problem (optimal housing) by combining transit accessibility with economic constraints.
+* **Data Reliability**: Implemented a **Medallion Architecture** coupled with rigorous **dbt testing**, ensuring that every insight on the dashboard is backed by clean, validated data.
+* **Efficiency with Modern Tools**: Utilized **uv** for high-speed Python environment management, significantly reducing build times and dependency conflicts.
+
+### **Future Roadmap:**
+- [ ] **CI/CD Integration**: Automating the Docker build and Terraform apply via GitHub Actions.
+- [ ] **Real-time Updates**: Integrating Cloud Functions to trigger the pipeline whenever IDFM updates their GTFS feeds.
+- [ ] **Enhanced Scoring**: Adding social amenities data (schools, parks) to the business scoring logic.
+
+---
+**Contact & Portfolio**
+
 
 ## **Resources**
 ### Dataset: 
